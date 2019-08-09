@@ -1,0 +1,92 @@
+﻿@page
+@model ChangeModel
+@{string error = "";
+
+    string password_error = "";
+
+    string name = "";
+    string address = "";
+
+    ViewData["Title"] = "Registration";
+    if (HttpContext.Request.Method == "POST")
+    {
+
+        name = Request.Form["name"];
+        address = Request.Form["address"];
+        string password = Request.Form["password"];
+        string password_che = Request.Form["password_repeat"];
+        string age = Request.Form["age"];
+        string gender = Request.Form["gender"];
+
+
+        if (Request.Form["password"].Equals(Request.Form["password_repeat"]))
+        {
+            UserModel user = new UserModel();
+            user.name = name;
+            user.login = Account.login;
+            user.password = password;
+            user.address = address;
+            user.age = Convert.ToInt32(age);
+            user.gender = gender;
+            Controler.EditAccount(user);
+            <div class="container" style="text-align:center; border-radius:3px; background-color :green; width:400px;">
+                <h1 style="color:white;">
+                    Account edited
+                </h1>
+            </div>
+        }
+        else
+        {
+            password_error = "Passwords are different!!!";
+        }
+    }
+}
+@{
+    if (!Account.active)
+    {
+        <div class="container" style="text-align:center; border-radius:3px; background-color :orangered; width:400px;">
+            <h1 style="color:white;">You did not sign in!!!</h1>
+        </div>
+    }
+    else
+    {
+        <form action="" method="post" class="sign_border container form_sign">
+            <h2 class=" h2_sign">Edit</h2>
+            <p style="color:red; text-align:center;">@error </p>
+            <div>
+                <label class="label_sign">Enter name:</label>
+                <div><input class="input_sign sign_border" type="text" name="name" value="@name" required /></div>
+            </div>
+            <div>
+                <label class="label_sign">Enter login: </label><p style="color:red; float:right"></p>
+                <div><input class="input_sign sign_border" type="text" name="login" value="@Account.login" readonly /></div>
+            </div>
+
+            <div>
+                <label class="text-danger label_sign">Enter password:</label>
+                <div><input class="input_sign sign_border" type="password" name="password" required /></div>
+            </div>
+            <div>
+                <label class="text-danger label_sign">Repeat password: </label><p style="color:red; float:right;">@password_error</p>
+                <div><input class="input_sign sign_border" type="password" name="password_repeat" required /></div>
+            </div>
+            <div>
+                <label class="label_sign">Enter address:</label>
+                <div><input class="input_sign sign_border" type="text" name="address" value="@address" required /></div>
+            </div>
+            <div>
+                <label class="label_sign">Enter age:</label>
+                <div><input class="input_sign sign_border" type="number" name="age" required /></div>
+            </div>
+            <div style="margin-left:3px; margin-top:5px; color:black; font-size:medium;">
+                <input type="radio" name="gender" value="male" required> Male
+                <input type="radio" name="gender" value="female" required> Female
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success" style="margin:4px;">Edit</button>
+
+            </div>
+
+        </form>
+    }
+}

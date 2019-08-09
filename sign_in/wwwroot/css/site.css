@@ -1,0 +1,58 @@
+
+body {
+
+    background-image: url(http://driver.drydrive.ru/images/bg_1.jpg);
+}
+.btn_index {
+    margin-top: 50px;
+    padding: 5px;
+}
+
+.h1_index {
+    background-color: white
+}
+
+.bg_index {
+    background-color: white;
+    text-align: center;
+    margin-top: 50px;
+    width: 400px;
+    height: auto;
+}
+
+.borders_index {
+    border: 2px solid grey;
+    border-radius: 10px;
+}
+
+.info_index {
+    display: block;
+    margin: 2px;
+}
+.h2_sign {
+    color: black;
+    text-align: center;
+    text-decoration: underline;
+    margin-top: 1px;
+}
+
+.input_sign {
+    width: 100%;
+}
+
+.label_sign {
+    color: black;
+}
+
+.form_sign {
+    width: 400px;
+    height: auto;
+    margin-top: 40px;
+    padding: 5px;
+}
+
+.sign_border {
+    border: 2px solid lightgrey;
+    background-color: white;
+    border-radius: 4px;
+}
