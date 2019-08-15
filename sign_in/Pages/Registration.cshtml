@@ -18,7 +18,7 @@
         string password_che = Request.Form["password_repeat"];
         string age = Request.Form["age"];
         string gender = Request.Form["gender"];
-       
+
         if (!Controler.CheckLogin(login))
         {
             if (Request.Form["password"].Equals(Request.Form["password_repeat"]))
@@ -30,12 +30,22 @@
                 user.address = address;
                 user.age = Convert.ToInt32(age);
                 user.gender = gender;
-                Controler.AddAccount(user);
-                <div class="container" style="text-align:center; border-radius:3px; background-color :green; width:400px;">
-                    <h1 style="color:white;">
-                        Account created
-                    </h1>
-                </div>
+                if (Controler.AddAccount(user,password_che))
+                {
+                    <div class="container" style="text-align:center; border-radius:3px; background-color :green; width:400px;">
+                        <h1 style="color:white;">
+                            Account created
+                        </h1>
+                    </div>
+                }
+                else
+                {
+                    <div class="container" style="text-align:center; border-radius:3px; background-color :orangered; width:400px;">
+                        <h1 style="color:white;">
+                            ERROR
+                        </h1>
+                    </div>
+                }
 
             }
             else
@@ -47,7 +57,7 @@
         {
             login_error = "This login is already use!!!";
         }
-                                
+
 
     }
 }
@@ -56,28 +66,28 @@
     <p style="color:red; text-align:center;">@error </p>
     <div>
         <label class="label_sign">Enter name:</label>
-        <div><input class="input_sign sign_border" type="text" name="name" value="@name" required/></div>
+        <div><input class="input_sign sign_border" type="text" name="name" value="@name" required /></div>
     </div>
     <div>
         <label class="label_sign">Enter login: </label><p style="color:red; float:right">@login_error</p>
-        <div><input class="input_sign sign_border" type="email" name="login" value="@login" required/></div>
+        <div><input class="input_sign sign_border" type="email" name="login" value="@login" required /></div>
     </div>
 
     <div>
         <label class="text-danger label_sign">Enter password:</label>
-        <div><input class="input_sign sign_border" type="password" name="password" required/></div>
+        <div><input class="input_sign sign_border" type="password" name="password" required /></div>
     </div>
     <div>
         <label class="text-danger label_sign">Repeat password: </label><p style="color:red; float:right;">@password_error</p>
-        <div><input class="input_sign sign_border" type="password" name="password_repeat" required/></div>
+        <div><input class="input_sign sign_border" type="password" name="password_repeat" required /></div>
     </div>
     <div>
         <label class="label_sign">Enter address:</label>
-        <div><input class="input_sign sign_border" type="text" name="address" value="@address" required/></div>
+        <div><input class="input_sign sign_border" type="text" name="address" value="@address" required /></div>
     </div>
     <div>
         <label class="label_sign">Enter age:</label>
-        <div><input class="input_sign sign_border" type="number" name="age" required/></div>
+        <div><input class="input_sign sign_border" type="number" name="age" required /></div>
     </div>
     <div style="margin-left:3px; margin-top:5px; color:black; font-size:medium;">
         <input type="radio" name="gender" value="male" required> Male

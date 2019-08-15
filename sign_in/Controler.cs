@@ -9,17 +9,62 @@ namespace sign_in
 {
     public class Controler
     {
-        public static void EditAccount(UserModel user)
+        public static bool EditAccount(UserModel user,string repeat_password)
         {
-            user.password = AddSymbols.ComputeSha256Hash(user.password);
-            MySqlConnection conn = DbWorker.getMysqlConnection();
-            conn.Open();
-            string query = $"UPDATE account SET name='{user.name}',password='{user.password}',address='{user.address}',age={user.age},gender='{user.gender}' WHERE login='{user.login}';";
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = query;
-            command.ExecuteNonQuery();
-            conn.Close();
+            bool error = false;
+            if (!user.password.Equals(repeat_password))
+            {
+                error = true;
+            }
+            if (user.age < 0)
+            {
+                error = true;
+            }
+            if (!user.name.Any(c => char.IsLetter(c)))
+            {
+                error = true;
+            }
+            if (!user.address.Any(c => char.IsLetter(c)))
+            {
+                error = true;
+            }
+            if (user.name.Length < 4)
+            {
+                error = true;
+            }
+            if (user.password.Length < 5)
+            {
+                error = true;
+            }
+            if (user.address.Length < 4)
+            {
+                error = true;
+            }
+            if (!double.TryParse(Convert.ToString(user.age), out double num))
+            {
+                error = true;
+            }
+            if (!user.gender.Equals("male") && !user.gender.Equals("female"))
+            {
+                error = true;
+            }
+
+
+            if (!error)
+            {
+                user.password = AddSymbols.ComputeSha256Hash(user.password);
+                MySqlConnection conn = DbWorker.getMysqlConnection();
+                conn.Open();
+                string query = $"UPDATE account SET name='{user.name}',password='{user.password}',address='{user.address}',age={user.age},gender='{user.gender}' WHERE login='{user.login}';";
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = conn;
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+
+                conn.Close();
+                return true;
+            }
+            return false;
         }
         public static bool CheckAccount(string login,string password)
         {
@@ -77,17 +122,79 @@ namespace sign_in
             conn.Close();
             return false;
         }
-        public static void AddAccount(UserModel user)
+        public static bool AddAccount(UserModel user,string repeat_password)
         {
-            user.password = AddSymbols.ComputeSha256Hash(user.password);
-            MySqlConnection conn = DbWorker.getMysqlConnection();
-            conn.Open();
-            string query = $"INSERT INTO account(name,login,password,address,age,gender) VALUES('{user.name}','{user.login}','{user.password}','{user.address}',{user.age},'{user.gender}');";
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-            command.CommandText = query;
-            command.ExecuteNonQuery();
-            conn.Close();
+
+            bool error = false;
+            if (CheckLogin(user.login))
+            {
+                error = true;
+            }
+            if (!user.password.Equals(repeat_password))
+            {
+                error = true;
+            }
+            if (user.age < 0)
+            {
+                error = true;
+            }
+            if (!user.name.Any(c => char.IsLetter(c)))
+            {
+                error = true;
+            }
+            if (!user.address.Any(c => char.IsLetter(c)))
+            {
+                error = true;
+            }
+            if (!user.login.Any(c => char.IsLetter(c)))
+            {
+                error = true;
+            }
+            if (!user.login.Contains('@'))
+            {
+                error = true;
+            }
+            if (user.name.Length < 4)
+            {
+                error = true;
+            }
+            if (user.login.Length < 4)
+            {
+                error = true;
+            }
+            if (user.password.Length < 5)
+            {
+                error = true;
+            }
+            if (user.address.Length < 4)
+            {
+                error = true;
+            }
+            if (!double.TryParse(Convert.ToString(user.age), out double num))
+            {
+                error = true;
+            }
+            if (!user.gender.Equals("male") && !user.gender.Equals("female"))
+            {
+                error = true;
+            }
+
+
+            if (!error)
+            {
+                user.password = AddSymbols.ComputeSha256Hash(user.password);
+                MySqlConnection conn = DbWorker.getMysqlConnection();
+                conn.Open();
+                string query = $"INSERT INTO account(name,login,password,address,age,gender) VALUES('{user.name}','{user.login}','{user.password}','{user.address}',{user.age},'{user.gender}');";
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = conn;
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            return false;
+
         }
         
     }
