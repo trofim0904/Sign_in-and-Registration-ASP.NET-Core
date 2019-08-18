@@ -11830,11 +11830,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ITEA\\hw8\\sign_in\\sign_in\\sign_in.csproj",
+      "projectUniqueName": "E:\\GIT\\Sign_in-and-Registration-ASP.NET-Core\\sign_in\\sign_in.csproj",
       "projectName": "sign_in",
-      "projectPath": "E:\\ITEA\\hw8\\sign_in\\sign_in\\sign_in.csproj",
+      "projectPath": "E:\\GIT\\Sign_in-and-Registration-ASP.NET-Core\\sign_in\\sign_in.csproj",
       "packagesPath": "C:\\Users\\dimat\\.nuget\\packages\\",
-      "outputPath": "E:\\ITEA\\hw8\\sign_in\\sign_in\\obj\\",
+      "outputPath": "E:\\GIT\\Sign_in-and-Registration-ASP.NET-Core\\sign_in\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
